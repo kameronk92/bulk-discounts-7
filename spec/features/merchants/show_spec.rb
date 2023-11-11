@@ -123,12 +123,12 @@ RSpec.describe "merchant dashboard index page" do
   end
 
 
-  #BD_US_1
+  #Discounts US 1
   it "contains a link to view a merchant's bulk discounts index page" do
     visit merchant_dashboard_path(@merchant_1)
 
-    expect(page).to have_link("view all discounts")
-    click_link("view all discounts")
-    expect(current_path).to eq("merchant/#{merchant_1.id}/discounts")
+    expect(page).to have_link("Bulk Discounts")
+    click_link("Bulk Discounts")
+    expect(current_path).to eq("/merchants/#{@merchant_1.id}/discounts")
   end
 end
