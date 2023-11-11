@@ -1,0 +1,5 @@
+<h1><%= "Merchant '#{@merchant.name}' Discounts Index" %></h1>
+
+<% @merchant.discounts.each_with_index do |discount, index| %>
+<p><%= "#{index + 1}. #{(discount.percentage * 100).round(0)}% off, after #{discount.quantity} of any item purchased" %></p>
+<% end %>
