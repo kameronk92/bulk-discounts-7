@@ -21,4 +21,10 @@ class Merchants::DiscountsController < ApplicationController
       flash[:alert] = "Error: #{error_message(discount.errors)}"
     end
   end
+
+  private
+
+  def discount_params
+    params.permit(:percentage, :quantity)
+  end
 end

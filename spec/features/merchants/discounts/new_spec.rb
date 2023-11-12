@@ -11,7 +11,7 @@ RSpec.describe "merchant discount new page" do
 
     expect(page).to have_link("Create a New Discount")
     click_on("Create a New Discount")
-    expect(current_path).to eq("merchants/#{@merchant_1.id}/discounts/new")
+    expect(current_path).to eq(new_merchant_discount_path(@merchant_1))
   end
 
   it "contains a form to create a new discount" do
@@ -22,6 +22,6 @@ RSpec.describe "merchant discount new page" do
     fill_in :percentage, with: 0.17
     fill_in :quantity, with: 6
     click_button("Add Discount")
-    expect(current_path).to eq(merchant_discount_path(@merchant_1))
+    expect(current_path).to eq(merchant_discounts_path(@merchant_1))
   end
 end
