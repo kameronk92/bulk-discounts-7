@@ -1,1 +1,2 @@
-<h3><%="Discount #{@discount.id} Show Page %></h3>
+<h3><%="Discount #{@discount.id} Show Page" %></h3>
+<p><%= "#{(@discount.percentage * 100).round(0)}% off, after #{@discount.quantity} of any item purchased"%>
