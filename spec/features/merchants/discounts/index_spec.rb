@@ -20,4 +20,13 @@ RSpec.describe "merchant discounts index page" do
     expect(page).to have_link("#{@discount_2.id}")
     click_on("#{@discount_1.id}")
   end
+
+  #Discounts US 3
+  it "has a button to delete a discount" do
+    visit "/merchants/#{@merchant_1.id}/discounts"
+    expect(page).to have_button("Delete Discount #{@discount_1.id}")
+    click_on("Delete Discount #{@discount_1.id}")
+    expect(current_path).to eq((merchant_discounts_path(@merchant_1)))
+    expect(page).to_not have_content("#{@discount_1.id}")
+  end
 end
