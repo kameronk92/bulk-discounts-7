@@ -23,5 +23,13 @@ RSpec.describe "merchant discount new page" do
     fill_in :quantity, with: 6
     click_button("Add Discount")
     expect(current_path).to eq(merchant_discounts_path(@merchant_1))
+    expect(page).to have_content("17% off, after 6 of any item purchased")
+  end
+
+  it "redierects to show page without a complete form" do
+    visit new_merchant_discount_path(@merchant_1)
+    fill_in :quantity, with: 6
+    click_button("Add Discount")
+    expect(current_path).to eq(new_merchant_discount_path(@merchant_1))
   end
 end
