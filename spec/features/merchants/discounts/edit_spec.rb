@@ -19,7 +19,7 @@ RSpec.describe "merchant discounts edit page" do
 
   it "is prefilled with discount attributes" do
     visit edit_merchant_discount_path(@merchant_1, @discount_1)
-    expect(page).to have_field(:percentage, with: @discount_1.percentage)
+    expect(page).to have_field(:percentage, with: @discount_1.pretty_percent)
     expect(page).to have_field(:quantity, with: @discount_1.quantity)
     expect(page).to have_button("Update Discount")
   end

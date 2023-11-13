@@ -1,7 +1,7 @@
 <section id="update_discount_form">
   <%= form_with url: merchant_discount_path(@merchant, @discount), method: :patch, data: { turbo: false }, local: true do |form| %>
     <%= form.label :percentage %>
-    <%= form.text_field :percentage, value: @discount.percentage %>
+    <%= form.text_field :percentage, value: @discount.pretty_percent %>
 
     <%= form.label :quantity %>
     <%= form.text_field :quantity, value: @discount.quantity %>
