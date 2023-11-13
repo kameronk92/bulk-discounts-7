@@ -19,7 +19,6 @@ Rails.application.routes.draw do
   namespace :merchants do
     resources :invoices, only: [:index, :update]
     resources :items, only: :show
-    resources :discounts, only: [:index, :show, :new, :create, :delete]
   end
   
   root "merchants#index"
