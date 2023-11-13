@@ -86,4 +86,13 @@ RSpec.describe "merchant invoice show page" do
       expect(current_path).to eq("/merchants/#{@merchant_1.id}/invoices/#{@invoice_1.id}")
     end
   end
+
+  #Discounts US 6
+  describe "discounted revenue" do
+    it "shows the new discounted revenue from the invoice" do
+      visit"/merchants/#{@merchant_1.id}/invoices/#{@invoice_1.id}"
+      save_and_open_page
+      
+    end
+  end
 end
