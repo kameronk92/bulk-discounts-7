@@ -14,7 +14,7 @@ RSpec.describe "merchant discount show page" do
     click_on "#{@discount_1.id}"
     expect(current_path).to eq("/merchants/#{@merchant_1.id}/discounts/#{@discount_1.id}")
     expect(page).to have_content("#{@discount_1.id}")
-    expect(page).to have_content("#{(@discount_1.percentage * 100).round(0)}%")
+    expect(page).to have_content(@discount_1.pretty_percent)
     expect(page).to have_content("#{@discount_1.quantity}")
   end
 end
