@@ -12,11 +12,12 @@ RSpec.describe "merchant discounts index page" do
   #Discounts US 1
   it "shows all a merchant's bulk discounts" do
     visit "/merchants/#{@merchant_1.id}/discounts"
-
-    expect(page).to have_content("#{@discount_1.id}. #{(@discount_1.percentage * 100).round(0)}% off, after #{@discount_1.quantity} of any item purchased")
+    within("#discount-#{@discount_1.id}") do
+      expect(page).to have_content("#{@discount_1.id}. #{(@discount_1.percentage * 100).round(0)}% off, after #{@discount_1.quantity} of any item purchased")
+      expect(page).to have_link("#{@discount_1.id}")
+    end
     expect(page).to have_content("#{@discount_2.id}. #{(@discount_2.percentage * 100).round(0)}% off, after #{@discount_2.quantity} of any item purchased")
     expect(page).to_not have_content("#{@discount_3.percentage}")
-    expect(page).to have_link("#{@discount_1.id}")
     expect(page).to have_link("#{@discount_2.id}")
     click_on("#{@discount_1.id}")
   end
