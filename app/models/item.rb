@@ -19,7 +19,7 @@ class Item < ApplicationRecord
 
 
   def price_total
-    invoice_items.sum("invoice_items.quantity * invoice_items.unit_price")
+    invoice_items.sum("invoice_items.quantity * invoice_items.unit_price / 100.0")
   end
   
   def total_revenue

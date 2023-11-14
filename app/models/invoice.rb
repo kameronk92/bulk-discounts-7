@@ -14,15 +14,14 @@ class Invoice < ApplicationRecord
   end
 
   def total_revenue
-    self.invoice_items.sum("quantity * unit_price")
+    self.invoice_items.sum("quantity * unit_price / 100")
   end
 
-  def bulk_discount(merchant)
-    Invoice.where(id: self.id)
-        .joins(invoice_items: { item: :discounts })
-        .where(items: { merchant_id: merchant.id })
-        .where(discounts: { merchant_id: merchant.id })
+  def bulk_discount
+    invoice_items
+        .select("invoice_items.id, (discounts.percentage) * (invoice_items.quantity * invoice_items.unit_price / 100.0) AS item_discount")
+        .joins(item: { merchant: :discounts })
         .where("invoice_items.quantity >= discounts.quantity")
-        .sum("invoice_items.quantity * invoice_items.unit_price * discounts.percentage")
+        .sum(&:item_discount)
   end
 end

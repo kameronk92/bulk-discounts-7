@@ -3,7 +3,9 @@
 <p>Invoice ID: <%= @invoice.id %></p>
 <p>Status: <%= @invoice.status %></p>
 <p>Date Created: <%= @invoice.date_format %></p>
-<p>Total revenue: <%= number_to_currency(@invoice.total_revenue / 100) %></p>
+<p>Total revenue: <%= number_to_currency(@invoice.total_revenue) %></p>
+<p>Total discount: <%= number_to_currency(@invoice.bulk_discount) %></p>
+<p>Total discounted revenue: <%= (number_to_currency(@invoice.total_revenue).to_f - (@invoice.bulk_discount).to_f) %></p>
 <p>Customer: <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %></p>
 <section id="item_status">
 <p>Items on the invoice: <% @merchant.merchant_items(@merchant.id).each do |item|%></p>

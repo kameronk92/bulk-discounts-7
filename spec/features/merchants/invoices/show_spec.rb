@@ -39,7 +39,6 @@ RSpec.describe "merchant invoice show page" do
     @transaction_4 = create_list(:transaction, 2, invoice: @invoice_4, result: 0)
     @transaction_5 = create_list(:transaction, 1, invoice: @invoice_5, result: 0)
     @transaction_6 = create(:transaction, invoice: @invoice_6, result: 1)
-    @discount_1 = @merchant_1.discounts.create(quantity: 1, percentage: 0.1)
   end
 
   #US 15
@@ -91,9 +90,24 @@ RSpec.describe "merchant invoice show page" do
   #Discounts US 6
   describe "discounted revenue" do
     it "shows the new discounted revenue from the invoice" do
-      visit"/merchants/#{@merchant_1.id}/invoices/#{@invoice_1.id}"
+      @invoice_8 = create(:invoice)
+      @merchant_3 = create(:merchant)
+      @discount_1 = @merchant_3.discounts.create(percentage: 0.25, quantity:51)
+      @item_8 = create(:item, merchant: @merchant_3, unit_price: 100)
+      @item_9 = create(:item, merchant: @merchant_3, unit_price: 1000)
+      invoice_item_1 = @item_8.invoice_items.create(quantity: 50, unit_price: 100, invoice: @invoice_8)
+      invoice_item_2 = @item_9.invoice_items.create(quantity: 100, unit_price: 1000, invoice: @invoice_8)
+     
+      visit"/merchants/#{@merchant_3.id}/invoices/#{@invoice_8.id}"
+      save_and_open_page
+
+      expected = "Total revenue: $1,050.00"
+      expected_discount = "Total discounted revenue: "
+      expect(page).to have_content(expected)
+      expect(page).to have_content(expected_discount)
       
-      require 'pry'; binding.pry
+    
+
     end
   end
 end
