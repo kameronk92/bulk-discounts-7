@@ -3,13 +3,16 @@
 <p>Invoice ID: <%= @invoice.id %></p>
 <p>Status: <%= @invoice.status %></p>
 <p>Date Created: <%= @invoice.date_format %></p>
-<p>Total revenue: <%= number_to_currency(@invoice.total_revenue / 100) %></p>
+<p>Total revenue: <%= number_to_currency(@invoice.total_revenue) %></p>
+<p>Total discount: <%= number_to_currency(@invoice.bulk_discount) %></p>
+<p>Total discounted revenue: <%= number_to_currency((@invoice.total_revenue) - (@invoice.bulk_discount)) %></p>
 <p>Customer: <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %></p>
 <section id="item_status">
 <p>Items on the invoice: <% @merchant.merchant_items(@merchant.id).each do |item|%></p>
   <p>Name: <%= item.name %></p>
   <p>Quantity sold: <%= item.quantity %></p>
-  <p>Price sold: <%= number_to_currency(item.price_total) %>
+  <p>Unit price: <%= number_to_currency(item.unit_price) %></p>
+  <p>Price sold: <%= number_to_currency(item.quantity * item.unit_price) %>
   <p>Status Form:  <%= form_with(url: "/merchants/#{@merchant.id}/invoices/#{@invoice.id}", method: :patch, local: true) do |form| %>
                  <% if item.status == "disabled" %>
                   <%= form.select :status, ["Enabled", "Disabled"], selected: "Disabled"%>

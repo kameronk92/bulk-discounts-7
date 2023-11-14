@@ -3,6 +3,7 @@ class Invoice < ApplicationRecord
   has_many :items, through: :invoice_items
   has_many :transactions
   belongs_to :customer
+  has_many :discounts, through: :items
 
   validates :status, presence: true
 
@@ -13,6 +14,15 @@ class Invoice < ApplicationRecord
   end
 
   def total_revenue
-    self.invoice_items.sum("quantity * unit_price")
+    self.invoice_items.sum("quantity * unit_price / 100")
+  end
+
+  def bulk_discount
+    invoice_items
+        .select("invoice_items.id, MAX(discounts.percentage) * (invoice_items.quantity * invoice_items.unit_price / 100.0) AS item_discount")
+        .joins(item: { merchant: :discounts })
+        .where("invoice_items.quantity >= discounts.quantity")
+        .group("invoice_items.id")
+        .sum(&:item_discount)
   end
 end

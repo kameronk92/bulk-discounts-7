@@ -86,4 +86,24 @@ RSpec.describe "merchant invoice show page" do
       expect(current_path).to eq("/merchants/#{@merchant_1.id}/invoices/#{@invoice_1.id}")
     end
   end
+
+  #Discounts US 6
+  describe "discounted revenue" do
+    it "shows the new discounted revenue from the invoice" do
+      @invoice_8 = create(:invoice)
+      @merchant_3 = create(:merchant)
+      @discount_1 = @merchant_3.discounts.create(percentage: 0.25, quantity:51)
+      @item_8 = create(:item, merchant: @merchant_3, unit_price: 100)
+      @item_9 = create(:item, merchant: @merchant_3, unit_price: 1000)
+      invoice_item_1 = @item_8.invoice_items.create(quantity: 50, unit_price: 100, invoice: @invoice_8)
+      invoice_item_2 = @item_9.invoice_items.create(quantity: 100, unit_price: 1000, invoice: @invoice_8)
+     
+      visit"/merchants/#{@merchant_3.id}/invoices/#{@invoice_8.id}"
+
+      expected = "Total revenue: $1,050.00"
+      expected_discount = "Total discounted revenue: $800.00"
+      expect(page).to have_content(expected)
+      expect(page).to have_content(expected_discount)
+    end
+  end
 end
