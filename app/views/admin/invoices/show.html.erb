@@ -9,6 +9,8 @@
   <p><strong>Customer:</strong> <%= @invoice.customer.full_name %></p>
   <p><strong>Created Date:</strong> <%= @invoice.date_format %></p>
   <p><strong>Total Revenue:</strong> $<%= @invoice.total_revenue %></p>
+  <p>Total discount: <%= number_to_currency(@invoice.bulk_discount) %></p>
+<p>Total discounted revenue: <%= number_to_currency((@invoice.total_revenue) - (@invoice.bulk_discount)) %></p>
 </div>
 
 <% @invoice.invoice_items.each do |invoice_item| %>

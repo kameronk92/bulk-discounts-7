@@ -15,6 +15,16 @@ RSpec.describe "Admin Invoices Index Page" do
 
     # Create a transaction for the invoice
     create(:transaction, invoice: @invoice1) 
+
+    #bulk discount data: 
+    @invoice_8 = create(:invoice)
+    @merchant_3 = create(:merchant)
+    @discount_1 = @merchant_3.discounts.create(percentage: 0.25, quantity:51)
+    @discount_2 = @merchant_3.discounts.create(percentage: 0.50, quantity:101)
+    @item_8 = create(:item, merchant: @merchant_3, unit_price: 100)
+    @item_9 = create(:item, merchant: @merchant_3, unit_price: 1000)
+    invoice_item_1 = @item_8.invoice_items.create(quantity: 50, unit_price: 100, invoice: @invoice_8)
+    invoice_item_2 = @item_9.invoice_items.create(quantity: 100, unit_price: 1000, invoice: @invoice_8)
   end
 
   # US 33
@@ -60,5 +70,13 @@ RSpec.describe "Admin Invoices Index Page" do
     @invoice1.reload
 
     expect(@invoice1.status).to eq("completed")
+  end
+
+  #Discounts US 8
+  it "displayes total discounted revenue for an invoice" do
+    visit admin_invoice_path(@invoice_8)
+
+    expected_discount = "Total discounted revenue: $800.00"
+    expect(page).to have_content(expected_discount)
   end
 end 

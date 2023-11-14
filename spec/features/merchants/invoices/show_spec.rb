@@ -45,6 +45,7 @@ RSpec.describe "merchant invoice show page" do
     @invoice_8 = create(:invoice)
     @merchant_3 = create(:merchant)
     @discount_1 = @merchant_3.discounts.create(percentage: 0.25, quantity:51)
+    @discount_2 = @merchant_3.discounts.create(percentage: 0.50, quantity:101)
     @item_8 = create(:item, merchant: @merchant_3, unit_price: 100)
     @item_9 = create(:item, merchant: @merchant_3, unit_price: 1000)
     invoice_item_1 = @item_8.invoice_items.create(quantity: 50, unit_price: 100, invoice: @invoice_8)
