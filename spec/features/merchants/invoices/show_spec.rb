@@ -39,6 +39,7 @@ RSpec.describe "merchant invoice show page" do
     @transaction_4 = create_list(:transaction, 2, invoice: @invoice_4, result: 0)
     @transaction_5 = create_list(:transaction, 1, invoice: @invoice_5, result: 0)
     @transaction_6 = create(:transaction, invoice: @invoice_6, result: 1)
+    @discount_1 = @merchant_1.discounts.create(quantity: 1, percentage: 0.1)
   end
 
   #US 15
@@ -91,8 +92,8 @@ RSpec.describe "merchant invoice show page" do
   describe "discounted revenue" do
     it "shows the new discounted revenue from the invoice" do
       visit"/merchants/#{@merchant_1.id}/invoices/#{@invoice_1.id}"
-      save_and_open_page
       
+      require 'pry'; binding.pry
     end
   end
 end

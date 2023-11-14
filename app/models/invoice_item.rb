@@ -12,12 +12,4 @@ class InvoiceItem < ApplicationRecord
     .select('id', 'invoices.id as invoice_id', 'invoice_items.status', 'invoices.created_at')
     .order('invoices.created_at ASC')
   end
-
-  def bulk_discount
-    #invoice items, where invoice ID = invoice ID,
-    #add up item quantities where item ID match
-    #multiply item qty by unit price
-    #compare to largest quantity discount
-    #apply discount
-  end
 end
