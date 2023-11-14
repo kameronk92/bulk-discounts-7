@@ -7,12 +7,20 @@
 <p>Total discount: <%= number_to_currency(@invoice.bulk_discount) %></p>
 <p>Total discounted revenue: <%= number_to_currency((@invoice.total_revenue) - (@invoice.bulk_discount)) %></p>
 <p>Customer: <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %></p>
+
 <section id="item_status">
-<p>Items on the invoice: <% @merchant.merchant_items(@merchant.id).each do |item|%></p>
+<h3>Items on the invoice:</h3> 
+<% @merchant.merchant_items(@merchant.id).each do |item|%>
+<section id="item-<%= item.id %>">
   <p>Name: <%= item.name %></p>
+  <%if  nil != item.discount%>
+    <p>Discount Applied: <%= link_to "#{item.discount.id}", "/merchants/#{@merchant.id}/discounts/#{item.discount.id}" %></p>
+  <%else%>
+  <%end%>
   <p>Quantity sold: <%= item.quantity %></p>
-  <p>Unit price: <%= number_to_currency(item.unit_price) %></p>
-  <p>Price sold: <%= number_to_currency(item.quantity * item.unit_price) %>
+  <p>Unit price: <%= number_to_currency(item.unit_price / 100) %></p>
+  <p>Price sold: <%= number_to_currency(item.quantity * item.unit_price / 100) %>
+
   <p>Status Form:  <%= form_with(url: "/merchants/#{@merchant.id}/invoices/#{@invoice.id}", method: :patch, local: true) do |form| %>
                  <% if item.status == "disabled" %>
                   <%= form.select :status, ["Enabled", "Disabled"], selected: "Disabled"%>
@@ -30,7 +38,8 @@
                 <% else %>
                 Pending</p>
              <% end %>
+  </p>
+  </section>
   <br>
 <%end%>
-
-
+</section>

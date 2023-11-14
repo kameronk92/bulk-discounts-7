@@ -38,4 +38,23 @@ class Item < ApplicationRecord
     .first
     .created_at
   end
+
+  # def bulk_discount
+  #   invoice_items
+  #       .select("invoice_items.id, MAX(discounts.percentage) * (invoice_items.quantity * invoice_items.unit_price / 100.0) AS item_discount")
+  #       .joins(item: { merchant: :discounts })
+  #       .where("invoice_items.quantity >= discounts.quantity")
+  #       .group("invoice_items.id")
+  #       .sum(&:item_discount)
+  # end
+
+  def discount
+      Discount
+      .select("discounts.id, MAX(discounts.percentage) AS max_discount")
+      .joins(merchant: { items: :invoice_items })
+      .where("invoice_items.item_id = ? AND invoice_items.quantity >= discounts.quantity", self.id)
+      .group("discounts.id")  
+      .order("max_discount DESC")  
+      .first
+  end
 end
