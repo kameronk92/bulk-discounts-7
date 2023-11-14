@@ -39,15 +39,6 @@ class Item < ApplicationRecord
     .created_at
   end
 
-  # def bulk_discount
-  #   invoice_items
-  #       .select("invoice_items.id, MAX(discounts.percentage) * (invoice_items.quantity * invoice_items.unit_price / 100.0) AS item_discount")
-  #       .joins(item: { merchant: :discounts })
-  #       .where("invoice_items.quantity >= discounts.quantity")
-  #       .group("invoice_items.id")
-  #       .sum(&:item_discount)
-  # end
-
   def discount
       Discount
       .select("discounts.id, MAX(discounts.percentage) AS max_discount")
