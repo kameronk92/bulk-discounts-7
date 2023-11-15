@@ -113,8 +113,8 @@ RSpec.describe "merchant invoice show page" do
     #Discounts US 7
     it "links each item to the discount applied" do
       visit"/merchants/#{@merchant_3.id}/invoices/#{@invoice_8.id}"
-
-      within("#item-#{@item_9.id}") do
+save_and_open_page
+      within("#item-discounts-#{@item_9.id}") do
         expect(page).to have_link("#{@discount_1.id}")
         click_on("#{@discount_1.id}")
         expect(current_path).to eq(merchant_discount_path(@merchant_3, @discount_1))

@@ -11,12 +11,16 @@
 <section id="item_status">
 <h3>Items on the invoice:</h3> 
 <% @merchant.merchant_items(@merchant.id).each do |item|%>
-<section id="item-<%= item.id %>">
-  <p>Name: <%= item.name %></p>
+<section id="item-discounts-<%= item.id %>">
   <%if  nil != item.discount%>
     <p>Discount Applied: <%= link_to "#{item.discount.id}", "/merchants/#{@merchant.id}/discounts/#{item.discount.id}" %></p>
-  <%else%>
-  <%end%>
+   <%end%>
+<%end%>
+
+
+<% @merchant.merchant_items(@merchant.id).each do |item|%>
+<section id="item-<%= item.id %>">
+  <p>Name: <%= item.name %></p>
   <p>Quantity sold: <%= item.quantity %></p>
   <p>Unit price: <%= number_to_currency(item.unit_price / 100) %></p>
   <p>Price sold: <%= number_to_currency(item.quantity * item.unit_price / 100) %>
